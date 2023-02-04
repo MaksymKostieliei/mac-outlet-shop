@@ -301,7 +301,8 @@ body {
 }
 
 .accordion {
-    background-color: #d6e1e6;;
+    background-color: #d6e1e6;
+    ;
     color: #000;
     cursor: pointer;
     padding: 18px;
@@ -369,7 +370,10 @@ body {
 /* item */
 
 .item-list {
-    display: flex; 
+    display: flex;
+    flex-wrap: wrap;
+    width: 800px;
+    height: auto;
     margin: 0px 0 20px 345px;
 }
 
@@ -383,22 +387,23 @@ body {
     border: 1px solid #E0E0E0;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
     margin-left: 40px;
+    margin-bottom: 40px;
 }
 
 .btn-like {
     display: flex;
-    position: relative;
-    top: 15px;
-    left: 120px;
-    justify-content: center;
-    align-items: center;
-    background: #FFFF;
-    border: 0;
-    color: #FFFFFF; 
+    position: absolute;
+    background-image: url("img/icons/like_empty.svg");
+    background-color: #FFFFFF;
+    width: 25px;
+    height: 25px;
+    border: 0px solid black;
     border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    
+    margin: 10px -250px 0 0;
+}
+
+.btn-like.active {
+    background-image: url("img/icons/like_filled.svg");
 }
 
 .item-image-box {
@@ -406,22 +411,24 @@ body {
     position: relative;
     justify-content: center;
     align-items: center;
-    width: 200px; 
+    width: 200px;
     height: 200px;
     margin: 0 0 20px;
 }
 
 .item-image {
     display: flex;
-    width: 80%;
-    
+    height: 200px;
+    width: auto;
+    margin: 20px 0;
+
 }
 
 .item-name {
     display: flex;
     font-weight: bold;
     font-size: 24px;
-    margin: 0 0 9px;
+    margin: 0 0 12px;
 }
 
 .stock {
@@ -447,6 +454,7 @@ body {
     display: flex;
     align-items: center;
     color: #767272;
+    margin: 0 0 11px;
 }
 
 .price {
@@ -476,26 +484,27 @@ body {
     background: #d6e1e6;
     width: 300px;
     height: 80px;
-    padding: 15px;
+    padding: 20px 15px 15px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 
-.reviews-image {  
+.reviews-image {
     display: flex;
     position: relative;
     justify-content: center;
     align-items: center;
-    width: 18px; 
+    width: 18px;
 }
 
 .logo-reviews-like {
     display: flex;
     position: relative;
-    bottom: 10px;
+    bottom: 11px;
     width: 100%;
     filter: invert(53%) sepia(31%) saturate(3698%) hue-rotate(327deg) brightness(94%) contrast(97%);
 }
+
 .reviews-number {
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
@@ -520,6 +529,12 @@ body {
     margin-right: 5px;
 }
 
+.bold-numbers-price {
+    font-weight: bold;
+    margin: 0px 5px;
+
+}
+
 .footer-p-reviews {
     margin-bottom: 7px;
 }
@@ -529,3 +544,110 @@ body {
 }
 
 
+/* modal */
+.modal {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100vh;
+}
+
+.modal_active {
+    display: flex;
+}
+
+.innerModal {
+    display: flex;
+    width: 1000px;
+    height: 490px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.item-footer-modal {
+    display: flex;
+    background: #d6e1e6;
+    width: 300px;
+    height: 80px;
+    padding: 20px 15px 15px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.item-image-modal {
+    display: flex;
+    height: 250px;
+    width: auto;
+    margin: 105px 90px 134px 30px;
+}
+
+.item-name-modal {
+    display: flex;
+    font-weight: bold;
+    color: #3B3E66;
+    font-size: 24px;
+    line-height: 28px;
+    margin: 35px 0 21px;
+}
+
+.modal-column-1 {
+    max-width: 300px;
+    border-right: 1px solid #e9e7e7;
+}
+
+.modal-column-2 {
+    max-width: 400px;
+    padding: 0 65px 0 50px;
+    border-right: 1px solid #e9e7e7;
+}
+
+.modal-column-3 {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.characteristic {
+    margin-bottom: 15px;
+}
+
+.characteristic-key {
+    font-size: 14px;
+    color: #767272;
+}
+
+.characteristic-value {
+    font-size: 14px;
+    color: #000;
+}
+
+.price-modal {
+    font-size: 36px;
+    line-height: 42px;
+    font-weight: bold;
+    color: #3B3E66;
+    margin-bottom: 23px;
+}
+
+.stock-number-modal {
+    font-size: 18px;
+    line-height: 21px;
+    font-weight: 400;
+    color: #3B3E66;
+    margin-bottom: 31px;
+}
+
+.bold-numbers-modal {
+    font-size: 18px;
+    line-height: 21px;
+    font-weight: bold;
+    color: #3B3E66;
+}
