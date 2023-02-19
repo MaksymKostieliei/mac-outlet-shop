@@ -13,7 +13,6 @@ const filtersItemsWrappers = document.querySelectorAll(
 const filtersCategories = document.querySelectorAll('.filters__category');
 const filters = document.querySelector('.filters');
 
-// думаю, это можно написать намного короче, пока что не понимаю, как
 body.addEventListener('click', (e) => {
   if (
     !filtersBtn.contains(e.target) &&
@@ -30,31 +29,26 @@ body.addEventListener('click', (e) => {
   }
 });
 
-// Открываем и закрываем поп-ап фильтров
 filtersBtn.addEventListener('click', (e) => {
   settingsPopup.classList.remove('opened');
   filtersPopup.classList.toggle('opened');
 });
 
-// Открываем и закрываем поп-ап настроек
 settingsBtn.addEventListener('click', () => {
   filtersPopup.classList.remove('opened');
   settingsPopup.classList.toggle('opened');
 });
 
-// Открываем и закрываем поп-ап корзины
 cartBtn.addEventListener('click', () => {
   cartPopup.classList.toggle('opened');
 });
 
-// получение рандомного числа
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-// Функция рендер карточки
 
 function renderCard(item) {
   const card = document.createElement('div');
@@ -150,10 +144,8 @@ function renderCard(item) {
   productList.appendChild(card);
 }
 
-// Рендерим карточки
 items.forEach(renderCard);
 
-// Закрываем и открываем аккордеон
 filtersCategories.forEach((category) => {
   category.addEventListener('click', (e) => {
     category.classList.toggle('filters__category_opened');
@@ -163,16 +155,6 @@ filtersCategories.forEach((category) => {
   });
 });
 
-// filters.addEventListener('click', (e) => {
-//   let filtersCategory = e.target.closest('.filters__category');
-//   if (!filtersCategory) return;
-//   filtersCategory.classList.toggle('filters__category_opened');
-//   filtersCategory.nextElementSibling.classList.toggle(
-//     'filters__items-animation-wrapper_opened'
-//   );
-// });
-
-// получаем все продукты + все елементы productPopup, которые хотим изменить
 const products = document.querySelectorAll('.product');
 const productPopup = document.querySelector('.product-popup-wrapper');
 const productPopupName = productPopup.querySelector('.product-popup__name');
@@ -184,8 +166,6 @@ const productPopupStock = productPopup.querySelector(
 const productPopupInfo = productPopup.querySelector('.product-popup__info');
 
 function productClickHandler(product) {
-  // делаем, что б поп-ап не открывался при клике на "добавить в корзину"
-  // или на "добавить в избранное"
   product.querySelector('.button').addEventListener('click', (e) => {
     e.stopPropagation();
   });
@@ -194,9 +174,8 @@ function productClickHandler(product) {
     .addEventListener('click', (e) => {
       e.stopPropagation();
     });
-  // при нажатии на остальные части карточки, делаем что б поп-ап открылся
+
   product.addEventListener('click', (e) => {
-    // Выбираем нужные нам елементы с карточки продукта, на которую клинкули
     const productName = product.querySelector('.product__name');
     const productStock = product.querySelector('.product__in-stock-amount');
     const productPrice = product.querySelector('.product__price');
@@ -206,29 +185,23 @@ function productClickHandler(product) {
     const productAddInfo = product.querySelector('.product__additional-info');
     const cloneInfo = productAddInfo.cloneNode(true);
 
-    // Вставляем в поп-ап ту инфу, которая уже есть в карточке
     productPopupName.textContent = productName.innerText;
     productPopupPrice.textContent = '$ ' + productPrice.textContent;
     productPopupStock.textContent = productStock.textContent;
     productPopupImage.setAttribute('src', productUrl);
 
-    // Удаление характеристик прошлого товара с поп-апа
     productPopup.querySelector('.product__additional-info')?.remove();
     productPopup
       .querySelectorAll('.product-popup__characteristic')
       ?.forEach((item) => item.remove());
 
-    // Вставляем елемент с инфой про отзывы и заказы
     cloneInfo.classList.add('product__additional-info_popup');
     productPopupInfo.appendChild(cloneInfo);
 
-    // Находим нужный нам айтем в массиве, который пришел с бд по имени
     const currArrItem = items.find(
       (item) => item.name === productName.textContent
     );
 
-    // Строим объект, по которому будем рендерить характеристики
-    // prettier-ignore
     const props = {
       'Color': currArrItem.color.join(', '),
       'Operating System': currArrItem.os,
@@ -239,7 +212,6 @@ function productClickHandler(product) {
       'Weight': currArrItem.size.weight,
     };
 
-    // Создаем елементы характеристик и вставляем их в поп-ап
     for (let key in props) {
       const characteristic = document.createElement('div');
       characteristic.classList.add('product-popup__characteristic');
@@ -250,14 +222,11 @@ function productClickHandler(product) {
       productPopupInfo.appendChild(characteristic);
     }
 
-    // Показываем поп-ап
     productPopup.classList.add('opened_grid');
-    // Не разрешаем прокручивать основной сайт
     body.style.overflow = 'hidden';
   });
 }
 
-// логика закрытия поп-апа продукта
 productPopup.addEventListener('click', (e) => {
   if (e.target === productPopup) {
     productPopup.classList.remove('opened_grid');
@@ -265,7 +234,6 @@ productPopup.addEventListener('click', (e) => {
   }
 });
 
-// открытие и закрытие фильтров на маленьких экранах
 const mobFiltersBtn = document.querySelector('.filters-bar-item_filters-btn');
 const mobileFiltersPopup = document.querySelector('.mobile-filters-popup');
 const mobileFilters = mobileFiltersPopup.querySelector('.filters');
@@ -299,12 +267,12 @@ mobileFiltersPopup.addEventListener('click', (e) => {
   }
 });
 
-// Логика фильтров
+
 const checkboxes = document.querySelectorAll('.filters__checkbox-input');
 const filterBtns = document.querySelectorAll('.filters__checkbox');
 const filterTextInputs = document.querySelectorAll('.filters__textfield-input');
 const searchInput = document.querySelector('.searchbar__input');
-// Сделали хранилище
+
 const currentFilters = {
   search: '',
   from: 0,
@@ -337,14 +305,10 @@ const newProductsArr = items.map((item) => {
   return res;
 });
 
-// назначили чекбоксам обработчик событий
 checkboxes.forEach((checkbox) => {
   checkbox.addEventListener('change', handleButtonClick);
 });
 
-// обработчик клика по чекбоксам
-// если кликнули, изменяем наше хранилище
-// запускаем фильрацию
 function handleButtonClick(e) {
   const currentCheckbox = e.currentTarget;
   const key = currentCheckbox.closest('.filters__items-animation-wrapper')
@@ -361,10 +325,7 @@ function handleButtonClick(e) {
   }
 }
 
-// логика самой фильтрации
-// принимает хранилище
 const handleFilterPosts = (filters) => {
-  // создаем новый массив, что б не менять исходный
   let filteredProducts = [...newProductsArr];
   let filterKeys = Object.keys(filters);
 
@@ -392,7 +353,6 @@ const handleFilterPosts = (filters) => {
       return;
     }
 
-    // ф-ция для поиска товаров по любому свойству
     function iterate(product, keys) {
       return keys.some((k) => {
         if (
@@ -411,7 +371,6 @@ const handleFilterPosts = (filters) => {
       });
     }
 
-    // фильтруем товары по поисковой строке
     if (key === 'search') {
       filteredProducts = filteredProducts.filter((product) => {
         const keys = Object.keys(product);
@@ -439,7 +398,6 @@ const handleFilterPosts = (filters) => {
   filteredProducts.forEach(renderCard);
 };
 
-// обработка инпутов с ценой цены
 function handleCostInput(e) {
   const currentInput = e.target;
   const type = currentInput.dataset.category;
@@ -466,7 +424,6 @@ filterTextInputs.forEach((input) => {
   input.addEventListener('input', handleCostInput);
 });
 
-// обработка инпута с поиском
 function handleSearchInput(e) {
   const currentInput = e.target;
   const type = currentInput.dataset.category;
@@ -476,7 +433,6 @@ function handleSearchInput(e) {
 
 searchInput.addEventListener('input', handleSearchInput);
 
-// Логика корзины
 const itemsContainer = document.querySelector('.cart-popup__products');
 
 const cart = {
@@ -537,7 +493,7 @@ function renderCartItem(item) {
     minusButton.disabled = true;
     minusButton.classList.add('disabled');
   }
-  // минусуем по клику
+
   cartItem
     .querySelector('.cart-popup-product__minus-icon')
     .parentElement.addEventListener('click', function () {
@@ -556,7 +512,6 @@ function renderCartItem(item) {
       }
     });
 
-  // плюсуем по клику
   cartItem
     .querySelector('.cart-popup-product__plus-icon')
     .parentElement.addEventListener('click', function () {
@@ -575,7 +530,7 @@ function renderCartItem(item) {
       }
     });
 
-  // удаляем по клику
+ 
   deleteButton.addEventListener('click', function () {
     const card = this.closest('.cart-popup-product');
     const cardsWrapper = document.querySelector('.cart-popup__products');
